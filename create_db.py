@@ -3,8 +3,6 @@ import sqlite3
 con = sqlite3.connect('companies.db')
 cur = con.cursor()
 
-cur.execute("DROP TABLE companies")
-
 cur.execute("CREATE TABLE companies ("
             "name STRING NOT NULL,"
             "c2018 INTEGER NOT NULL,"

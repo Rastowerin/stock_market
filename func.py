@@ -31,7 +31,31 @@ def get_info(name):
     cap = r.json()['marketdata']['data'][0][-5]
     r.close()
 
-    if None in (c2018, c2019, cap):
+    if None in (c2018, c2019, cap) or 0 in (c2018, c2019, cap):
         return None
 
-    return c2018, c2019, cap
+    return name, c2018, c2019, cap
+
+
+def average_array(array, k):
+
+    sum, num = 0, 0
+    result_array = []
+
+    for i in range(min(len(array), k)):
+        sum += array[i]
+        num += 1
+
+    for i in range(len(array)):
+
+        if i - k > 0:
+            sum -= array[i - k - 1]
+            num -= 1
+
+        if i + k < len(array):
+            sum += array[i + k]
+            num += 1
+
+        result_array.append(sum / num)
+
+    return result_array

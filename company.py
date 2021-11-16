@@ -1,20 +1,14 @@
 import sqlite3
-import func
 
 
 class Company:
 
-    def __init__(self, name):
+    def __init__(self, name, c2018, c2019, cap):
 
         self.name = name
-        data = func.get_info(name)
 
-        f = True
-        con = sqlite3.connect('companies.db')
-        cur = con.cursor()
-
-        if data:
-            self.c2018, self.c2019, self.cap = func.get_info(name)
+        if None not in (c2018, c2019, cap):
+            self.c2018, self.c2019, self.cap = c2018, c2019, cap
         else:
             self.c2018, self.c2019, self.cap = None, None, None
 
@@ -47,6 +41,15 @@ class Company:
 
     def get_name(self):
         return self.name
+
+    def get_c2018(self):
+        return self.c2018
+
+    def get_c2019(self):
+        return self.c2019
+
+    def get_cap(self):
+        return self.cap
 
     def load(self):
 
