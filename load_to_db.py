@@ -25,7 +25,13 @@ for i in range(len(h)):
       cur.execute("SELECT * FROM companies WHERE name == '{}'".format(comp[0]))
 
       if comp and len(cur.fetchall()) == 0:
-            cur.execute("INSERT INTO companies(name, c2018, c2019, cap) VALUES ('{}', {}, {}, {})".format(*comp))
+
+            s1, s2 = '', ''
+            for year in range(2006, 2022):
+                  s1 += 'c{}, '.format(year)
+                  s2 += "'{}', ".format(comp[1][year])
+
+            cur.execute("INSERT INTO companies(name, {}cap) VALUES ('{}', {}{})".format(s1, comp[0], s2, comp[2]))
             con.commit()
 
       print(comp[0], i + 1)

@@ -3,14 +3,9 @@ import sqlite3
 
 class Company:
 
-    def __init__(self, name, c2018, c2019, cap):
+    def __init__(self, name, cost_dict, cap):
 
-        self.name = name
-
-        if None not in (c2018, c2019, cap):
-            self.c2018, self.c2019, self.cap = c2018, c2019, cap
-        else:
-            self.c2018, self.c2019, self.cap = None, None, None
+        self.name, self.cost_dict, self.cap = name, cost_dict, cap
 
     def __str__(self):
         return self.name
@@ -42,20 +37,16 @@ class Company:
     def get_name(self):
         return self.name
 
-    def get_c2018(self):
-        return self.c2018
+    def get_cost_in_year(self, year):
+        return self.cost_dict[year]
 
-    def get_c2019(self):
-        return self.c2019
+    def get_change_factor_in_year(self, year):
+
+        if self.cost_dict[year] != 'None' and (year + 1) in self.cost_dict.keys() and self.cost_dict[year + 1] != 'None':
+            return max(float(self.cost_dict[year]) / float(self.cost_dict[year + 1]),
+                       float(self.cost_dict[year + 1]) / float(self.cost_dict[year]))
+
+        return None
 
     def get_cap(self):
         return self.cap
-
-    def load(self):
-
-        con = sqlite3.connect('companies.db')
-        cur = con.cursor()
-
-        cur.execute("INSERT INTO companies(name, c2018, c2019, cap) VALUES ('{}', {}, {}, {})".format(
-            self.name, self.c2018, self.c2019, self.cap))
-        con.commit()
