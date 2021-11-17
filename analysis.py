@@ -25,11 +25,12 @@ for i in range(len(companies_list)):
 
         change_factor = company.get_change_factor_in_year(year)
 
-        if change_factor is None:
+        if change_factor is None or change_factor > 20:
             continue
 
         change_factors.append(change_factor)
-        caps.append(company.get_cap())
+        caps.append(len(caps) + 1)
+        # caps.append(company.get_cap())
 
 indicators = func.average_array(change_factors, 100)
 
